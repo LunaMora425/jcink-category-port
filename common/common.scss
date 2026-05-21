@@ -216,11 +216,6 @@
   font-size: var(--font-down-2);
   padding: 0 10px 1px;
   border-radius: 30px;
-
-  .d-icon {
-    filter: drop-shadow(1px 1px 2px #000) drop-shadow(-1px -1px 2px #000)
-      drop-shadow(1px 2px 2px #000) drop-shadow(1px -1px 2px #000);
-  }
 }
 
 .no-new-post-macro {
