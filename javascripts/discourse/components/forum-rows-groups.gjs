@@ -302,7 +302,7 @@ export default class ForumRowsGroups extends Component {
 
                       {{! Category title }}
                       <div class="forum__row-name">
-                        <a href={{c.url}}>{{c.name}}</a>
+                        <a href={{c.url}}>{{dIcon c.icon}} {{c.name}}</a>
                       </div>
 
                       {{! Description }}
