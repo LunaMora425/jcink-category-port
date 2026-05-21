@@ -1,0 +1,303 @@
+// =============================================================================
+//  Discourse Forum Rows — common.scss
+//  JCink-style category rows for Discourse.
+//
+//  Variable mapping from Barbermonger (JCink) → Discourse palette:
+//    --theme__color-secondary-shadow   → var(--color-secondary-shadow)  (defined in main theme)
+//    --theme__background-main          → var(--secondary)
+//    --theme__color-secondary          → var(--tertiary)
+//    --theme__color-primary            → var(--quaternary)
+//    --theme__text-main                → var(--primary)
+//    --textsize__title                 → var(--font-up-3)
+//    --textsize__subtitle              → var(--font-up-1)
+//    --textsize-body__secondary        → var(--font-down-1)
+// =============================================================================
+
+
+// -----------------------------------------------------------------------------
+// 1. Hide the default Discourse category layout when this component is active.
+//    Targets the main categories page only (.navigation-categories .contents).
+// -----------------------------------------------------------------------------
+
+.navigation-categories .contents {
+  .category-boxes-with-topics,
+  .category-boxes {
+    display: none;
+  }
+}
+
+@if $show_on_mobile == "true" {
+  .mobile-view .category-list.with-topics {
+    display: none;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// 2. Forum rows list — overrides the default .custom-category-group grid
+//    (set to 2 or 3 columns in the groups component) to a single column,
+//    since each row is full-width.
+// -----------------------------------------------------------------------------
+
+.forum-rows-list {
+  display: flex !important;  // override the CSS grid from the groups component
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+
+// -----------------------------------------------------------------------------
+// 3. Individual forum row — the outer card.
+//    border-left-color comes from the inline style set by the borderColor helper
+//    (i.e. the category's own color).
+// -----------------------------------------------------------------------------
+
+.forum__row {
+  box-sizing: border-box;
+  width: 100%;
+  background: var(--secondary);
+  border-radius: var(--d-border-radius, 10px);
+
+  // Dotted border on three sides (theme aesthetic); left is the category color accent.
+  border-top: 2px dotted var(--color-secondary-shadow, var(--primary-low-mid));
+  border-right: 2px dotted var(--color-secondary-shadow, var(--primary-low-mid));
+  border-bottom: 2px dotted var(--color-secondary-shadow, var(--primary-low-mid));
+  border-left-width: 5px;
+  border-left-style: solid;
+  // border-left-color: set per-category via inline style (borderColor helper)
+
+  &.muted {
+    opacity: 0.6;
+  }
+
+  &:hover {
+    box-shadow: var(--category-hover-shadow, 0 4px 12px rgba(0, 0, 0, 0.15));
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// 4. Inner content area (equivalent to JCink's <grid> element).
+// -----------------------------------------------------------------------------
+
+.forum__row-inner {
+  padding: 15px;
+}
+
+
+// -----------------------------------------------------------------------------
+// 5. Header row: stats (left) + activity indicator (right).
+//    Mirrors JCink's <new-post> flex container.
+// -----------------------------------------------------------------------------
+
+.forum__row-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.forum__row-stats {
+  font-size: var(--font-down-1);
+  color: var(--primary-medium);
+
+  .stat-count {
+    font-weight: 700;
+    color: var(--primary);
+  }
+}
+
+// New-activity / read indicator dot (replaces JCink's img_new_post star icon).
+.activity-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.activity-dot--new {
+  background: var(--tertiary);
+  box-shadow: 0 0 5px var(--tertiary);
+}
+
+.activity-dot--read {
+  background: var(--primary-low);
+}
+
+
+// -----------------------------------------------------------------------------
+// 6. Category title (mirrors JCink's <name>).
+// -----------------------------------------------------------------------------
+
+.forum__row-name {
+  margin-bottom: 6px;
+
+  a {
+    font-family: var(--heading-font-family, inherit);
+    font-size: var(--font-up-3);
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--tertiary);
+
+    &:hover {
+      color: var(--quaternary);
+    }
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// 7. Description (mirrors JCink's <desc>).
+// -----------------------------------------------------------------------------
+
+.forum__row-desc {
+  margin: 6px 0 8px;
+  font-size: var(--font-0);
+  color: var(--primary-medium);
+
+  p {
+    margin: 0;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// 8. Last post info (mirrors JCink's <lastpost> and <lastposter>).
+//    Right-aligned, sitting below the description.
+// -----------------------------------------------------------------------------
+
+.forum__row-lastpost {
+  display: block;
+  text-align: right;
+  font-family: var(--heading-font-family, inherit);
+  font-size: var(--font-up-1);
+  color: var(--tertiary) !important;
+  overflow-wrap: anywhere;
+  margin-top: 8px;
+
+  &:hover {
+    color: var(--quaternary) !important;
+  }
+}
+
+.forum__row-lastposter {
+  text-align: right;
+  text-transform: capitalize;
+  font-size: var(--font-0);
+  color: var(--primary-medium);
+  margin-top: 2px;
+}
+
+.lastposter-username {
+  display: inline-block;
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
+  font-size: var(--font-0);
+  color: var(--tertiary) !important;
+
+  &:hover {
+    color: var(--quaternary) !important;
+  }
+}
+
+.post-time {
+  display: inline-block;
+  margin-left: 4px;
+  color: var(--primary-low-mid);
+  font-size: var(--font-down-1);
+}
+
+
+// -----------------------------------------------------------------------------
+// 9. Subcategory pills strip — sits outside .forum__row-inner so it gets a
+//    visual separator from the main content (mirrors JCink's <subforums>).
+// -----------------------------------------------------------------------------
+
+.forum__row-subforums {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: center;
+  padding: 0 15px 15px;
+
+  &:empty {
+    display: none;
+  }
+}
+
+// Individual pill — mirrors JCink's span.subforums a styling.
+.subforum-link {
+  background-color: var(--tertiary);
+  border: 2px solid var(--color-secondary-shadow, var(--primary-low-mid));
+  border-radius: 30px;
+  box-shadow: var(--color-secondary-shadow, var(--primary-low-mid)) 3px 3px 0 0;
+  color: var(--secondary) !important;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  font-size: var(--font-down-1);
+  line-height: 20px;
+  min-width: 60px;
+  padding: 0 10px;
+  text-align: center;
+  text-decoration: none;
+  text-shadow:
+    1px 1px 2px #000,
+    -1px -1px 2px #000,
+    1px 2px 2px #000,
+    1px -1px 2px #000;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+
+  &:hover {
+    color: var(--quaternary) !important;
+  }
+
+  &:active {
+    box-shadow: var(--color-secondary-shadow, var(--primary-low-mid)) 1px 1px 0 0;
+    transform: translate(2px, 2px);
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// 10. Extra link rows (lite variant — no stats or last-post column).
+// -----------------------------------------------------------------------------
+
+.forum__row--extra-link {
+  .forum__row-inner {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .forum__row-header {
+    align-items: flex-start;
+    margin-bottom: 4px;
+  }
+
+  .forum__row-icon {
+    margin-right: 8px;
+    padding-top: 2px;
+    flex-shrink: 0;
+
+    .d-icon {
+      color: var(--tertiary);
+      font-size: var(--font-up-2);
+    }
+  }
+
+  .forum__row-name a {
+    font-size: var(--font-up-2);
+  }
+
+  .forum__row-desc {
+    margin-top: 4px;
+  }
+}

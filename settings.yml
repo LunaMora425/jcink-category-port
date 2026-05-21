@@ -1,0 +1,66 @@
+# Category group configuration.
+# Format: "Group Name: category-slug, extra-link-id, category-slug-2 | Group 2: slug, slug"
+category_groups:
+  type: "list"
+  default: "Default: staff, site-feedback"
+
+# Extra links — mixed into category groups by ID.
+# Same JSON schema as discourse-category-groups-component.
+extra_links:
+  default: >
+    []
+  json_schema: >-
+    {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "ID",
+            "description": "A unique identifier for the link"
+          },
+          "url": {
+            "type": "string",
+            "title": "URL",
+            "description": "The URL for the link"
+          },
+          "color": {
+            "type": "string",
+            "title": "Color",
+            "description": "The color associated with the link",
+            "format": "color"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title",
+            "description": "The title of the link"
+          },
+          "description": {
+            "type": "string",
+            "format": "markdown",
+            "title": "Description",
+            "description": "A short description of the link"
+          },
+          "icon": {
+            "type": "string",
+            "title": "Icon",
+            "description": "A Font Awesome icon name. Example: heart",
+            "default": ""
+          }
+        },
+        "required": ["id", "url", "title", "color"]
+      }
+    }
+
+# Show the component on mobile as well as desktop.
+show_on_mobile:
+  default: true
+
+# Display categories that aren't assigned to any group in an "Other" group at the bottom.
+show_ungrouped:
+  default: true
+
+# Hide subcategories whose notification level is muted from parent category rows.
+hide_muted_subcategories:
+  default: false
