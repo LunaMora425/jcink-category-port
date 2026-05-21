@@ -55,27 +55,13 @@ function getPostCount(category) {
 
 // Returns the first featured topic for a category (the most recently active).
 function getLastTopic(category) {
-  return category.featuredTopics?.[0] ?? null;
+  return category.topics?.[0] ?? null;
 }
 
 // Returns the username of the last poster on a topic.
 function getLastPosterUsername(topic) {
   if (!topic) return "";
-
-  // Try top-level properties first (present on some Discourse versions)
-  if (topic.lastPosterUsername) return topic.lastPosterUsername;
-  if (topic.last_poster_username) return topic.last_poster_username;
-
-  // Fall back to the posters array
-  const posters = topic.posters;
-  if (posters?.length) {
-    const latest = posters.find((p) => p.extras?.includes("latest"));
-    if (latest?.user?.username) return latest.user.username;
-    const last = posters[posters.length - 1];
-    if (last?.user?.username) return last.user.username;
-  }
-
-  return "";
+  return topic.last_poster?.username ?? "";
 }
 
 // Returns a human-readable relative date string (e.g. "3h ago", "2d ago").
