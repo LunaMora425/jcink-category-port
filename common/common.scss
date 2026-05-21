@@ -101,14 +101,33 @@
   }
 }
 
-// Default collapsed state: hide the list
-[class^="custom-category-group-"] > .forum-rows-list {
-  display: none;
-}
+[class^="custom-category-group-"] {
+  > .forum-rows-list {
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+    margin-bottom: 0;
+    padding-top: 0.25em;
+    transition: opacity 1s;
+  }
 
-// Expanded state: show it
-[class^="custom-category-group-"].is-expanded > .forum-rows-list {
-  display: grid;
+  .d-icon {
+    transition: all 0.25s;
+  }
+
+  &.is-expanded {
+    > .forum-rows-list {
+      height: unset;
+      opacity: 1;
+      overflow: visible;
+      margin-bottom: 1.5em;
+      transition: opacity 1s;
+    }
+
+    .custom-category-group-toggle .d-icon {
+      transform: rotate(90deg);
+    }
+  }
 }
 
 // -----------------------------------------------------------------------------

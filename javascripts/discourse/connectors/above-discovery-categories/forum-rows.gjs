@@ -1,4 +1,3 @@
-/* eslint-disable ember/no-classic-components, ember/require-tagless-components */
 import Component from "@ember/component";
 import { classNames } from "@ember-decorators/component";
 import { and, or } from "discourse/truth-helpers";
