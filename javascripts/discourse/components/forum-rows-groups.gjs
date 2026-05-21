@@ -254,8 +254,6 @@ export default class ForumRowsGroups extends Component {
           <div
             class="custom-category-group-{{this.slugId group.name}} is-expanded"
           >
-            {{! Ribbon-style group toggle header — styled by the main theme's
-                .custom-category-group-toggle rules }}
             <a
               href="#{{this.slugId group.name}}"
               id={{this.slugId group.name}}
@@ -301,14 +299,6 @@ export default class ForumRowsGroups extends Component {
                             >
                               {{dIcon "burst"}}
                               new!
-                            </span>
-                          {{else}}
-                            <span
-                              class="no-new-post-macro"
-                              title="No new posts"
-                            >
-                              {{dIcon "splotch"}}
-                              read
                             </span>
                           {{/if}}
                         </div>
