@@ -8,13 +8,14 @@ import { htmlSafe } from "@ember/template";
 import PluginOutlet from "discourse/components/plugin-outlet";
 import borderColor from "discourse/helpers/border-color";
 import dIcon from "discourse/helpers/d-icon";
+import emoji from "discourse/helpers/emoji";
 import lazyHash from "discourse/helpers/lazy-hash";
 import { slugify } from "discourse/lib/utilities";
 import { i18n } from "discourse-i18n";
 import ForumRowExtraLink from "./forum-row-extra-link";
 
 // ---------------------------------------------------------------------------
-// Module-level helpers — usable directly in <template> in GJS format
+// Module-level helpers
 // ---------------------------------------------------------------------------
 
 function parseSettings(settingsStr) {
@@ -35,6 +36,16 @@ class ExtraLink {
     this.description = args.description;
     this.icon = args.icon;
   }
+}
+
+// Returns true if the category icon is an emoji
+function isEmojiCategory(category) {
+  return category.style_type === "emoji";
+}
+
+// Grabs color for category icon
+function categoryIconStyle(color) {
+  return htmlSafe(`color: #${color}`);
 }
 
 // Returns true when the category has topics the user hasn't read yet.
@@ -302,7 +313,16 @@ export default class ForumRowsGroups extends Component {
 
                       {{! Category title }}
                       <div class="forum__row-name">
-                        <a href={{c.url}}>{{dIcon c.icon}} {{c.name}}</a>
+                        <a href={{c.url}}>
+                          {{#if (isEmojiCategory c)}}
+                            {{emoji c.emoji}}
+                          {{else}}
+                            <span style={{categoryIconStyle c.color}}>{{dIcon
+                                c.icon
+                              }}</span>
+                          {{/if}}
+                          {{c.name}}
+                        </a>
                       </div>
 
                       {{! Description }}
