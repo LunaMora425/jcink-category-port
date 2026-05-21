@@ -64,3 +64,9 @@ show_ungrouped:
 # Hide subcategories whose notification level is muted from parent category rows.
 hide_muted_subcategories:
   default: false
+
+# Add New Post Activity Indicator Icons
+activity_indicator_icons:
+  default: "burst|splotch"
+  type: "list"
+  list_type: "compact"

@@ -1,0 +1,29 @@
+{
+  "private": true,
+  "devDependencies": {
+    "@discourse/lint-configs": "2.37.2",
+    "ember-template-lint": "7.9.3",
+    "eslint": "9.39.2",
+    "prettier": "3.8.0",
+    "stylelint": "17.0.0"
+  },
+  "scripts": {
+    "lint": "pnpm lint:css && pnpm lint:js && pnpm lint:hbs && pnpm lint:prettier",
+    "lint:fix": "pnpm lint:css:fix && pnpm lint:js:fix && pnpm lint:hbs:fix && pnpm lint:prettier:fix",
+    "lint:css": "pnpm stylelint common/**/*.scss --allow-empty-input",
+    "lint:css:fix": "pnpm stylelint common/**/*.scss --fix --allow-empty-input",
+    "lint:js": "eslint javascripts --cache --no-error-on-unmatched-pattern",
+    "lint:js:fix": "eslint javascripts --fix --no-error-on-unmatched-pattern",
+    "lint:hbs": "ember-template-lint javascripts/**/*.gjs --no-error-on-unmatched-pattern",
+    "lint:hbs:fix": "ember-template-lint javascripts/**/*.gjs --fix --no-error-on-unmatched-pattern",
+    "lint:prettier": "pnpm prettier common/**/*.scss javascripts/**/*.{js,gjs} --check --no-error-on-unmatched-pattern",
+    "lint:prettier:fix": "pnpm prettier common/**/*.scss javascripts/**/*.{js,gjs} -w --no-error-on-unmatched-pattern"
+  },
+  "engines": {
+    "node": ">= 22",
+    "npm": "please-use-pnpm",
+    "yarn": "please-use-pnpm",
+    "pnpm": "^10"
+  },
+  "packageManager": "pnpm@10.28.0"
+}

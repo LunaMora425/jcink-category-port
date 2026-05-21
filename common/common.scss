@@ -31,6 +31,76 @@
 	}
 }
 
+@media (min-width: 40rem) {
+	#list-area h2 {
+		margin: 0;
+	}
+}
+
+.custom-category-group-toggle h2 {
+	color: var(--header_primary);
+	text-shadow: var(--theme__title-boxshadow);
+	font-weight: 400;
+	text-transform: uppercase;
+}
+
+@media screen and (min-width: 800px) {
+	.custom-category-group {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+.custom-category-group-toggle {
+	display: flex;
+	align-items: center;
+	padding-top: 0.5em;
+	--s: 1.2em;
+	--d: 0.3em;
+	--c: 0.8em;
+	padding: 0 calc(var(--s) + 0.5em) var(--d);
+	line-height: 1.8;
+	background:
+		conic-gradient(
+				at left var(--s) bottom var(--d),
+				#0000 25%,
+				#0008 0 37.5%,
+				#0004 0
+			)
+			0 / 50% 100% no-repeat,
+		conic-gradient(
+				at right var(--s) bottom var(--d),
+				#0004 62.5%,
+				#0008 0 75%,
+				#0000 0
+			)
+			100% / 50% 100% no-repeat;
+	clip-path: polygon(
+		0 var(--d),
+		var(--s) var(--d),
+		var(--s) 0,
+		calc(100% - var(--s)) 0,
+		calc(100% - var(--s)) var(--d),
+		100% var(--d),
+		calc(100% - var(--c)) calc(50% + var(--d) / 2),
+		100% 100%,
+		calc(100% - var(--s) - var(--d)) 100%,
+		calc(100% - var(--s) - var(--d)) calc(100% - var(--d)),
+		calc(var(--s) + var(--d)) calc(100% - var(--d)),
+		calc(var(--s) + var(--d)) 100%,
+		0 100%,
+		var(--c) calc(50% + var(--d) / 2)
+	);
+	background-color: var(--quaternary);
+	width: 100%;
+	box-sizing: border-box;
+	justify-content: center;
+	margin: 10px 0 10px;
+
+	.d-icon {
+		color: var(--primary);
+	}
+}
+
 // -----------------------------------------------------------------------------
 // 2. Forum rows list — overrides the default .custom-category-group grid
 //    (set to 2 or 3 columns in the groups component) to a single column,
@@ -108,9 +178,8 @@
 		1px -1px 2px #000;
 	display: inline-block;
 	font-weight: 600;
-	font-size: var(--textsize-body__primary);
-	padding: 0 10px;
-	line-height: 140%;
+	font-size: var(--font-down-2);
+	padding: 0 10px 1px;
 	border-radius: 30px;
 }
 
@@ -230,7 +299,7 @@
 	border: 2px solid var(--color-secondary-shadow, var(--primary-low-mid));
 	border-radius: 30px;
 	box-shadow: var(--color-secondary-shadow, var(--primary-low-mid)) 3px 3px 0 0;
-	color: var(--secondary) !important;
+	color: var(--primary) !important;
 	cursor: pointer;
 	display: inline-block;
 	font-weight: 600;

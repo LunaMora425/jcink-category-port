@@ -1,14 +1,14 @@
 import Component from "@glimmer/component";
-import { action } from "@ember/object";
 import { fn } from "@ember/helper";
 import { on } from "@ember/modifier";
+import { action } from "@ember/object";
+import didInsert from "@ember/render-modifiers/modifiers/did-insert";
 import { service } from "@ember/service";
 import { htmlSafe } from "@ember/template";
-import didInsert from "@ember/render-modifiers/modifiers/did-insert";
+import PluginOutlet from "discourse/components/plugin-outlet";
 import borderColor from "discourse/helpers/border-color";
 import dIcon from "discourse/helpers/d-icon";
 import lazyHash from "discourse/helpers/lazy-hash";
-import PluginOutlet from "discourse/components/plugin-outlet";
 import { slugify } from "discourse/lib/utilities";
 import { i18n } from "discourse-i18n";
 import ForumRowExtraLink from "./forum-row-extra-link";
@@ -26,6 +26,7 @@ function parseSettings(settingsStr) {
 
 class ExtraLink {
   isExtraLink = true;
+
   constructor(args) {
     this.id = args.id;
     this.url = args.url;
@@ -54,7 +55,9 @@ function getPostCount(category) {
 // Returns the most recently active topic for a category.
 function getLastTopic(category) {
   const topics = category.topics;
-  if (!topics?.length) return null;
+  if (!topics?.length) {
+    return null;
+  }
   return topics.reduce((latest, t) =>
     new Date(t.last_posted_at) > new Date(latest.last_posted_at) ? t : latest
   );
@@ -62,15 +65,21 @@ function getLastTopic(category) {
 
 // Returns the username of the last poster on a topic.
 function getLastPosterUsername(topic) {
-  if (!topic) return "";
+  if (!topic) {
+    return "";
+  }
   return topic.last_poster?.username ?? "";
 }
 
 // Returns a human-readable relative date string (e.g. "3h ago", "2d ago").
 function getLastPostDate(topic) {
-  if (!topic) return "";
+  if (!topic) {
+    return "";
+  }
   const raw = topic.bumpedAt ?? topic.bumped_at;
-  if (!raw) return "";
+  if (!raw) {
+    return "";
+  }
 
   const d = new Date(raw);
   const diffMs = Date.now() - d;
@@ -78,10 +87,18 @@ function getLastPostDate(topic) {
   const hours = Math.floor(mins / 60);
   const days = Math.floor(hours / 24);
 
-  if (mins < 1) return "just now";
-  if (mins < 60) return `${mins}m ago`;
-  if (hours < 24) return `${hours}h ago`;
-  if (days < 30) return `${days}d ago`;
+  if (mins < 1) {
+    return "just now";
+  }
+  if (mins < 60) {
+    return `${mins}m ago`;
+  }
+  if (hours < 24) {
+    return `${hours}h ago`;
+  }
+  if (days < 30) {
+    return `${days}d ago`;
+  }
   return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
 }
 
@@ -109,33 +126,44 @@ export default class ForumRowsGroups extends Component {
 
     const findExtraLink = (id) => extraLinks.find((l) => l.id === id);
 
-    const groups = parsedSettings.reduce((acc, { categoryGroup, categories }) => {
-      if (!categories) return acc;
-      const items = [];
-
-      categories.split(",").map((s) => s.trim()).forEach((slugOrId) => {
-        const cat = this.args.categories.find(
-          (c) => c.slug === slugOrId && !c.hasMuted
-        );
-        if (cat) {
-          items.push(cat);
-          foundCategorySlugs.push(cat.slug);
-        } else {
-          const link = findExtraLink(slugOrId);
-          if (link) items.push(new ExtraLink(link));
+    const groups = parsedSettings.reduce(
+      (acc, { categoryGroup, categories }) => {
+        if (!categories) {
+          return acc;
         }
-      });
+        const items = [];
 
-      if (items.length > 0) acc.push({ name: categoryGroup, items });
-      return acc;
-    }, []);
+        categories
+          .split(",")
+          .map((s) => s.trim())
+          .forEach((slugOrId) => {
+            const cat = this.args.categories.find(
+              (c) => c.slug === slugOrId && !c.hasMuted
+            );
+            if (cat) {
+              items.push(cat);
+              foundCategorySlugs.push(cat.slug);
+            } else {
+              const link = findExtraLink(slugOrId);
+              if (link) {
+                items.push(new ExtraLink(link));
+              }
+            }
+          });
+
+        if (items.length > 0) {
+          acc.push({ name: categoryGroup, items });
+        }
+        return acc;
+      },
+      []
+    );
 
     // Categories not assigned to any group
     if (settings.show_ungrouped) {
       const ungrouped = this.args.categories.filter(
         (c) =>
-          !foundCategorySlugs.includes(c.slug) &&
-          c.notification_level !== 0
+          !foundCategorySlugs.includes(c.slug) && c.notification_level !== 0
       );
       if (ungrouped.length > 0) {
         groups.push({
@@ -231,7 +259,7 @@ export default class ForumRowsGroups extends Component {
                 {{#if c.isExtraLink}}
                   <ForumRowExtraLink @link={{c}} />
 
-                {{! ── Real Discourse category ── }}
+                  {{! ── Real Discourse category ── }}
                 {{else}}
                   <li
                     id="fr-{{c.id}}"
@@ -253,12 +281,20 @@ export default class ForumRowsGroups extends Component {
                         </div>
                         <div class="forum__row-indicator">
                           {{#if (hasNewActivity c)}}
-                            <span class="new-post-macro" title="New posts since your last visit">
-                              <i class="fa-solid fa-burst fa-xl"></i> new!
+                            <span
+                              class="new-post-macro"
+                              title="New posts since your last visit"
+                            >
+                              {{dIcon "burst"}}
+                              new!
                             </span>
                           {{else}}
-                            <span class="no-new-post-macro" title="No new posts">
-                              <i class="fa-solid fa-splotch fa-l"></i> read
+                            <span
+                              class="no-new-post-macro"
+                              title="No new posts"
+                            >
+                              {{dIcon "splotch"}}
+                              read
                             </span>
                           {{/if}}
                         </div>
