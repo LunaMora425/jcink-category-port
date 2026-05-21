@@ -300,6 +300,14 @@ export default class ForumRowsGroups extends Component {
                               {{dIcon "burst"}}
                               new!
                             </span>
+                          {{else}}
+                            <span
+                              class="no-new-post-macro"
+                              title="No new posts"
+                            >
+                              {{dIcon "splotch"}}
+                              read
+                            </span>
                           {{/if}}
                         </div>
                       </div>
