@@ -48,6 +48,13 @@
   .custom-category-group {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  [class^="custom-category-group-"] {
+    &.is-expanded {
+      > .forum-rows-list {
+        margin: 0 25px;
+      }
+    }
+  }
 }
 
 .custom-category-group-toggle {
@@ -120,7 +127,6 @@
       height: unset;
       opacity: 1;
       overflow: visible;
-      margin: 0 25px;
       margin-bottom: 1.5em;
       transition: opacity 1s;
     }
