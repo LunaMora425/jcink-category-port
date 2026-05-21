@@ -50,7 +50,10 @@ function categoryIconStyle(color) {
 
 // Returns true when the category has topics the user hasn't read yet.
 function hasNewActivity(category) {
-  return category.topics?.some((t) => t.unread > 0 || t.new_posts > 0) ?? false;
+  const topics = category.topics ?? [];
+  return topics.some(
+    (t) => t.unseen || (t.unread_posts ?? 0) > 0 || (t.new_posts ?? 0) > 0
+  );
 }
 
 // Returns the topic count for a category.
