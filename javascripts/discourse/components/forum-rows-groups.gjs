@@ -38,9 +38,7 @@ class ExtraLink {
 
 // Returns true when the category has topics the user hasn't read yet.
 function hasNewActivity(category) {
-  const unread = category.unreadTopics ?? category.unread_topics ?? 0;
-  const fresh = category.newTopics ?? category.new_topics ?? 0;
-  return unread > 0 || fresh > 0;
+  return category.topics?.some((t) => t.unread > 0 || t.new_posts > 0) ?? false;
 }
 
 // Returns the topic count for a category.
@@ -255,15 +253,13 @@ export default class ForumRowsGroups extends Component {
                         </div>
                         <div class="forum__row-indicator">
                           {{#if (hasNewActivity c)}}
-                            <span
-                              class="activity-dot activity-dot--new"
-                              title="New or unread topics"
-                            ></span>
+                            <span class="new-post-macro" title="New posts since your last visit">
+                              <i class="fa-solid fa-burst fa-xl"></i> new!
+                            </span>
                           {{else}}
-                            <span
-                              class="activity-dot activity-dot--read"
-                              title="No new posts"
-                            ></span>
+                            <span class="no-new-post-macro" title="No new posts">
+                              <i class="fa-solid fa-splotch fa-l"></i> read
+                            </span>
                           {{/if}}
                         </div>
                       </div>
