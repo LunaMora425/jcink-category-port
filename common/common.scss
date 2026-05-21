@@ -157,6 +157,10 @@
   background: var(--header_background);
   width: 100%;
 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
   &.muted {
     opacity: 0.6;
   }
@@ -206,6 +210,11 @@
   font-size: var(--font-down-2);
   padding: 0 10px 1px;
   border-radius: 30px;
+
+  .d-icon {
+    filter: drop-shadow(1px 1px 2px #000) drop-shadow(-1px -1px 2px #000)
+      drop-shadow(1px 2px 2px #000) drop-shadow(1px -1px 2px #000);
+  }
 }
 
 .no-new-post-macro {
@@ -217,6 +226,7 @@
   background-color: var(--quaternary);
   border: 2px solid var(--color-quaternary-shadow);
   box-shadow: var(--color-quaternary-shadow) 2px 2px 0 0;
+  font-size: var(--font-down-1);
 }
 
 // -----------------------------------------------------------------------------
