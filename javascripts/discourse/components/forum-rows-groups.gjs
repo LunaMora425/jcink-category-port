@@ -53,9 +53,13 @@ function getPostCount(category) {
   return category.postCount ?? category.post_count ?? 0;
 }
 
-// Returns the first featured topic for a category (the most recently active).
+// Returns the most recently active topic for a category.
 function getLastTopic(category) {
-  return category.topics?.[0] ?? null;
+  const topics = category.topics;
+  if (!topics?.length) return null;
+  return topics.reduce((latest, t) =>
+    new Date(t.last_posted_at) > new Date(latest.last_posted_at) ? t : latest
+  );
 }
 
 // Returns the username of the last poster on a topic.
