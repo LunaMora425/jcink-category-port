@@ -4,6 +4,17 @@ en:
       "Combines categories into groups and structures them like the jcink forum.
       Based on the discourse-category-groups-component plugin by @awkaiser, but
       with a different UI and some extra features."
-  discourse_forum_rows:
-    ungrouped_categories_title: "Other Categories"
-    muted_categories_title: "Muted"
+    settings:
+      category_groups:
+        "Format as: Group name: category-slug, extra-link-id, category-slug-2"
+      extra_links:
+        "Extra links that can be mixed into category list. Add link ID in
+        category_groups setting to render"
+      show_on_mobile: "Show the collapsible category box groups on mobile"
+      show_ungrouped:
+        "Display a group of categories that aren't assigned to another group"
+      hide_muted_subcategories:
+        "When enabled, a non-muted parent category will not appear under the
+        muted section if it has a muted subcategory"
+  ungrouped_categories_title: "Other"
+  muted_categories_title: "Muted"

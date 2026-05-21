@@ -38,7 +38,19 @@ class ExtraLink {
 
 // Returns true when the category has topics the user hasn't read yet.
 function hasNewActivity(category) {
-  return (category.unreadTopics > 0) || (category.newTopics > 0);
+  const unread = category.unreadTopics ?? category.unread_topics ?? 0;
+  const fresh = category.newTopics ?? category.new_topics ?? 0;
+  return unread > 0 || fresh > 0;
+}
+
+// Returns the topic count for a category.
+function getTopicCount(category) {
+  return category.topicCount ?? category.topic_count ?? 0;
+}
+
+// Returns the post count for a category.
+function getPostCount(category) {
+  return category.postCount ?? category.post_count ?? 0;
 }
 
 // Returns the first featured topic for a category (the most recently active).
@@ -47,10 +59,23 @@ function getLastTopic(category) {
 }
 
 // Returns the username of the last poster on a topic.
-// Handles both camelCase (JS model) and snake_case (raw API object) property names.
 function getLastPosterUsername(topic) {
   if (!topic) return "";
-  return topic.lastPosterUsername ?? topic.last_poster_username ?? "";
+
+  // Try top-level properties first (present on some Discourse versions)
+  if (topic.lastPosterUsername) return topic.lastPosterUsername;
+  if (topic.last_poster_username) return topic.last_poster_username;
+
+  // Fall back to the posters array
+  const posters = topic.posters;
+  if (posters?.length) {
+    const latest = posters.find((p) => p.extras?.includes("latest"));
+    if (latest?.user?.username) return latest.user.username;
+    const last = posters[posters.length - 1];
+    if (last?.user?.username) return last.user.username;
+  }
+
+  return "";
 }
 
 // Returns a human-readable relative date string (e.g. "3h ago", "2d ago").
@@ -81,7 +106,6 @@ export default class ForumRowsGroups extends Component {
   @service siteSettings;
 
   // Only render on the main categories page when a "boxes" style is active.
-  // Both "boxes_with_subcategories" and "boxes_with_featured_topics" satisfy this.
   get shouldShow() {
     return (
       this.router.currentRouteName === "discovery.categories" &&
@@ -90,7 +114,6 @@ export default class ForumRowsGroups extends Component {
   }
 
   // Builds the ordered list of groups from the component settings.
-  // Logic is preserved from discourse-category-groups-component for compatibility.
   get categoryGroupList() {
     const parsedSettings = parseSettings(settings.category_groups);
     const extraLinks = JSON.parse(settings.extra_links || "[]");
@@ -235,9 +258,9 @@ export default class ForumRowsGroups extends Component {
                       {{! Header row: stats left, new-activity indicator right }}
                       <div class="forum__row-header">
                         <div class="forum__row-stats">
-                          <span class="stat-count">{{c.topicCount}}</span>
+                          <span class="stat-count">{{getTopicCount c}}</span>
                           {{" "}}topics &amp;{{" "}}
-                          <span class="stat-count">{{c.postCount}}</span>
+                          <span class="stat-count">{{getPostCount c}}</span>
                           {{" "}}posts
                         </div>
                         <div class="forum__row-indicator">
