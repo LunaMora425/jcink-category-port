@@ -3,7 +3,7 @@
 //  JCink-style category rows for Discourse.
 //
 //  Variable mapping from Barbermonger (JCink) → Discourse palette:
-//    --theme__color-secondary-shadow   → var(--color-secondary-shadow)  (defined in main theme)
+//    --theme__color-secondary-shadow   → var(--color-tertiary-shadow)  (defined in main theme)
 //    --theme__background-main          → var(--secondary)
 //    --theme__color-secondary          → var(--tertiary)
 //    --theme__color-primary            → var(--quaternary)
@@ -159,7 +159,7 @@
 .forum__row {
   box-sizing: border-box;
   border-radius: 10px;
-  border: 2px dotted var(--color-secondary-shadow) !important;
+  border: 2px dotted var(--color-tertiary-shadow) !important;
   background: var(--header_background);
   width: 100%;
 
@@ -220,7 +220,7 @@
 
 .no-new-post-macro {
   background-color: var(--secondary);
-  border: 2px dotted var(--color-secondary-shadow);
+  border: 2px dotted var(--color-tertiary-shadow);
 }
 
 .new-post-macro {
@@ -333,9 +333,9 @@
 // Individual pill — mirrors JCink's span.subforums a styling.
 .subforum-link {
   background-color: var(--tertiary);
-  border: 2px solid var(--color-secondary-shadow, var(--primary-low-mid));
+  border: 2px solid var(--color-tertiary-shadow, var(--primary-low-mid));
   border-radius: 30px;
-  box-shadow: var(--color-secondary-shadow, var(--primary-low-mid)) 3px 3px 0 0;
+  box-shadow: var(--color-tertiary-shadow, var(--primary-low-mid)) 3px 3px 0 0;
   color: var(--primary) !important;
   cursor: pointer;
   display: inline-block;
@@ -360,8 +360,7 @@
   }
 
   &:active {
-    box-shadow: var(--color-secondary-shadow, var(--primary-low-mid)) 1px 1px 0
-      0;
+    box-shadow: var(--color-tertiary-shadow, var(--primary-low-mid)) 1px 1px 0 0;
     transform: translate(2px, 2px);
   }
 }
