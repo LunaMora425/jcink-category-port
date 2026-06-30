@@ -6,3 +6,7 @@ Ended up having to make a custom fork of what is essentially the Discourse Categ
 
 ## Sources
 Original Category Groups component: https://meta.discourse.org/t/category-groups/200874
+
+## RP Resources Category
+
+The RP Resources category, with its custom redirects and images, are included in this theme component. Disabling this theme component disables both the category layout and the RP Resources cards.

@@ -399,3 +399,50 @@
     margin-top: 4px;
   }
 }
+
+// -----------------------------------------------------------------------------
+// 11. RP Resources category group — 3-column grid override + redirect images.
+// -----------------------------------------------------------------------------
+
+.custom-category-group-rp-resources {
+  .custom-category-group {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .custom-category-group li.category-box {
+    border-top: none;
+    border-color: transparent !important;
+    background: transparent !important;
+    max-width: 300px;
+  }
+}
+
+.redirect-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  max-width: 300px;
+}
+
+@media only screen and (max-width: 425px) {
+  .custom-category-group-rp-resources {
+    .custom-category-group {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .redirect-image img {
+    max-width: 150px;
+  }
+}
+
+@media only screen and (min-width: 426px) and (max-width: 768px) {
+  .custom-category-group-rp-resources {
+    .custom-category-group {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .redirect-image img {
+    max-width: 200px;
+  }
+}
