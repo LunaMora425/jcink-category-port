@@ -408,15 +408,11 @@
   .custom-category-group {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  .custom-category-group li.category-box {
+  .custom-category-group li.forum__row {
     border-top: none;
     border-color: transparent !important;
     background: transparent !important;
     max-width: 300px;
-  }
-
-  li.forum__row.forum__row--extra-link {
-    border: none !important;
   }
 }
 
