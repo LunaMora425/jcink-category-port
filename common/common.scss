@@ -414,6 +414,10 @@
     background: transparent !important;
     max-width: 300px;
   }
+
+  li.forum__row.forum__row--extra-link {
+    border: none !important;
+  }
 }
 
 .redirect-image img {
@@ -421,6 +425,7 @@
   height: 100%;
   object-fit: cover;
   max-width: 300px;
+  border-radius: 10px;
 }
 
 @media only screen and (max-width: 425px) {
