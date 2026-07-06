@@ -37,9 +37,16 @@
   }
 }
 
+// Banner lettering follows the scheme-aware banner vars (2026-07-05 beta
+// vote): surface-toned ink + berkeley shadow on light's teal banner; cream +
+// blood-red shadow on dark's orange ribbon. Fallbacks keep the old ribbon
+// look if the main theme is absent.
 .custom-category-group-toggle h2 {
-  color: var(--header_primary);
-  text-shadow: var(--theme__title-boxshadow);
+  color: var(--bm-banner-ink, var(--bm-ribbon-text, #d4be9f));
+  text-shadow: var(
+    --bm-banner-shadow,
+    var(--bm-ribbon-shadow, var(--theme__title-boxshadow))
+  );
   font-weight: 400;
   text-transform: uppercase;
 }
@@ -97,14 +104,15 @@
     0 100%,
     var(--c) calc(50% + var(--d) / 2)
   );
-  background-color: var(--quaternary);
+  background-color: var(--bm-banner-bg, var(--bm-ribbon-bg, var(--quaternary)));
   width: 100%;
   box-sizing: border-box;
   justify-content: center;
   margin: 10px 0 10px;
 
+  // Chevron matches the banner lettering.
   .d-icon {
-    color: var(--primary);
+    color: var(--bm-banner-ink, var(--bm-ribbon-text, #d4be9f));
   }
 }
 
@@ -160,7 +168,7 @@
   box-sizing: border-box;
   border-radius: 10px;
   border: 2px dotted var(--color-tertiary-shadow) !important;
-  background: var(--header_background);
+  background: var(--bm-surface-2, var(--header_background));
   width: 100%;
 
   display: flex;
@@ -205,12 +213,6 @@
 // New Activity Indicators
 .no-new-post-macro,
 .new-post-macro {
-  color: var(--primary);
-  text-shadow:
-    1px 1px 2px #000,
-    -1px -1px 2px #000,
-    1px 2px 2px #000,
-    1px -1px 2px #000;
   display: inline-block;
   font-weight: 600;
   font-size: var(--font-down-2);
@@ -218,16 +220,47 @@
   border-radius: 30px;
 }
 
+// Sits on the palette surface: normal ink, outline only on dark palettes.
 .no-new-post-macro {
+  color: var(--primary);
+  text-shadow: var(
+    --bm-text-outline,
+    1px 1px 2px #000,
+    -1px -1px 2px #000,
+    1px 2px 2px #000,
+    1px -1px 2px #000
+  );
   background-color: var(--secondary);
   border: 2px dotted var(--color-tertiary-shadow);
+
+  // SVGs ignore text-shadow — the icon needs a matching drop-shadow filter,
+  // which likewise only applies on dark palettes.
+  .d-icon {
+    filter: var(
+      --bm-icon-outline,
+      drop-shadow(1px 0 0 #000) drop-shadow(-1px 0 0 #000)
+        drop-shadow(0 1px 0 #000) drop-shadow(0 -1px 0 #000)
+    );
+  }
 }
 
+// Sits on the warm brand accent: mode-invariant cream + dark outline.
 .new-post-macro {
+  color: var(--bm-ribbon-text, #d4be9f);
+  text-shadow:
+    1px 1px 2px #000,
+    -1px -1px 2px #000,
+    1px 2px 2px #000,
+    1px -1px 2px #000;
   background-color: var(--quaternary);
   border: 2px solid var(--color-quaternary-shadow);
   box-shadow: var(--color-quaternary-shadow) 2px 2px 0 0;
   font-size: var(--font-down-1);
+
+  .d-icon {
+    filter: drop-shadow(1px 0 0 #000) drop-shadow(-1px 0 0 #000)
+      drop-shadow(0 1px 0 #000) drop-shadow(0 -1px 0 #000);
+  }
 }
 
 // -----------------------------------------------------------------------------
@@ -331,12 +364,15 @@
 }
 
 // Individual pill — mirrors JCink's span.subforums a styling.
+// Brand-button family: bg/hover/shadow owned by the theme's --bm-btn-* /
+// --bm-accent-shadow vars (light: ec5d37 + 0da9b1 hover + blood-red shadow;
+// dark: tertiary + berkeley, unchanged). Cream lettering stays mode-invariant.
 .subforum-link {
-  background-color: var(--tertiary);
-  border: 2px solid var(--color-tertiary-shadow, var(--primary-low-mid));
+  background-color: var(--bm-btn-bg, var(--tertiary));
+  border: 2px solid var(--bm-accent-shadow, var(--primary-low-mid));
   border-radius: 30px;
-  box-shadow: var(--color-tertiary-shadow, var(--primary-low-mid)) 3px 3px 0 0;
-  color: var(--primary) !important;
+  box-shadow: var(--bm-accent-shadow, var(--primary-low-mid)) 3px 3px 0 0;
+  color: var(--bm-ribbon-text, #d4be9f) !important;
   cursor: pointer;
   display: inline-block;
   font-weight: 600;
@@ -356,11 +392,11 @@
   touch-action: manipulation;
 
   &:hover {
-    color: var(--quaternary) !important;
+    color: var(--bm-btn-hover-ink, var(--quaternary)) !important;
   }
 
   &:active {
-    box-shadow: var(--color-tertiary-shadow, var(--primary-low-mid)) 1px 1px 0 0;
+    box-shadow: var(--bm-accent-shadow, var(--primary-low-mid)) 1px 1px 0 0;
     transform: translate(2px, 2px);
   }
 }
@@ -416,12 +452,38 @@
   }
 }
 
-.redirect-image img {
+// The graphic is a CSS background so it can come from the THEME's scheme-aware
+// --bm-gfx-* vars (light/dark swap included). Fallbacks are this component's
+// bundled assets, so the cards still render under a theme that defines nothing.
+// All six source images are square (500x500); aspect-ratio reproduces the
+// exact sizing the old <img> got from its intrinsic dimensions.
+.redirect-image a {
+  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  aspect-ratio: 1 / 1;
   max-width: 300px;
   border-radius: 10px;
+  background-size: cover;
+  background-position: center;
+}
+
+.extra-link-talk-show .redirect-image a {
+  background-image: var(--bm-gfx-talk-show, url($bmTalkShow));
+}
+.extra-link-internet-safety .redirect-image a {
+  background-image: var(--bm-gfx-internet-safety, url($internetSafety));
+}
+.extra-link-literary-roleplay .redirect-image a {
+  background-image: var(--bm-gfx-literary-guide, url($literaryRPGuide));
+}
+.extra-link-ad-guide .redirect-image a {
+  background-image: var(--bm-gfx-ad-guide, url($roleplayAdGuide));
+}
+.extra-link-roleplay-index .redirect-image a {
+  background-image: var(--bm-gfx-rp-index, url($roleplayIndex));
+}
+.extra-link-spare-room .redirect-image a {
+  background-image: var(--bm-gfx-help-series, url($spareRoomHelp));
 }
 
 @media only screen and (max-width: 425px) {
@@ -431,7 +493,7 @@
     }
   }
 
-  .redirect-image img {
+  .redirect-image a {
     max-width: 150px;
   }
 }
@@ -443,7 +505,7 @@
     }
   }
 
-  .redirect-image img {
+  .redirect-image a {
     max-width: 200px;
   }
 }
