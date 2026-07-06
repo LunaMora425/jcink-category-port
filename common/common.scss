@@ -244,7 +244,9 @@
   }
 }
 
-// Sits on the warm brand accent: mode-invariant cream + dark outline.
+// Quaternary accent family: bg flips per mode, so border/shadow use the
+// scheme-aware quaternary pairing (--bm-accent2-shadow). Lettering stays
+// brand-furniture (cream + dark outline) — quaternary is dark in both modes.
 .new-post-macro {
   color: var(--bm-ribbon-text, #d4be9f);
   text-shadow:
@@ -253,8 +255,8 @@
     1px 2px 2px #000,
     1px -1px 2px #000;
   background-color: var(--quaternary);
-  border: 2px solid var(--color-quaternary-shadow);
-  box-shadow: var(--color-quaternary-shadow) 2px 2px 0 0;
+  border: 2px solid var(--bm-accent2-shadow, var(--color-quaternary-shadow));
+  box-shadow: var(--bm-accent2-shadow, var(--color-quaternary-shadow)) 2px 2px 0 0;
   font-size: var(--font-down-1);
 
   .d-icon {
