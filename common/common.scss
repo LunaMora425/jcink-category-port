@@ -231,7 +231,8 @@
     1px -1px 2px #000
   );
   background-color: var(--secondary);
-  border: 2px dotted var(--color-tertiary-shadow);
+  border: 2px dotted
+    var(--color-tertiary-shadow, var(--bm-accent-shadow, var(--primary-low-mid)));
 
   // SVGs ignore text-shadow — the icon needs a matching drop-shadow filter,
   // which likewise only applies on dark palettes.
