@@ -167,7 +167,8 @@
 .forum__row {
   box-sizing: border-box;
   border-radius: 10px;
-  border: 2px dotted var(--color-tertiary-shadow) !important;
+  border: 2px dotted
+    var(--color-tertiary-shadow, var(--bm-accent-shadow, var(--primary-low-mid))) !important;
   background: var(--bm-surface-2, var(--header_background));
   width: 100%;
 
