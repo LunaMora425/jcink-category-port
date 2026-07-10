@@ -1,23 +1,10 @@
-// =============================================================================
-//  Discourse Forum Rows — common.scss
-//  JCink-style category rows for Discourse.
-//
-//  Variable mapping from Barbermonger (JCink) → Discourse palette:
-//    --theme__color-secondary-shadow   → var(--color-tertiary-shadow)  (defined in main theme)
-//    --theme__background-main          → var(--secondary)
-//    --theme__color-secondary          → var(--tertiary)
-//    --theme__color-primary            → var(--quaternary)
-//    --theme__text-main                → var(--primary)
-//    --textsize__title                 → var(--font-up-3)
-//    --textsize__subtitle              → var(--font-up-1)
-//    --textsize-body__secondary        → var(--font-down-1)
-// =============================================================================
+// =====================================================================
+// Discourse Forum Rows
+// =====================================================================
 
-// -----------------------------------------------------------------------------
-// 1. Hide the default Discourse category layout when this component is active.
-//    Targets the main categories page only (.navigation-categories .contents).
-// -----------------------------------------------------------------------------
-
+// ---------------------------------------------------------------------
+// 1. Hide the default Discourse category layout when this component is active
+// ---------------------------------------------------------------------
 .navigation-categories .contents {
   .category-boxes-with-topics,
   .category-boxes {
@@ -37,10 +24,6 @@
   }
 }
 
-// Banner lettering follows the scheme-aware banner vars (2026-07-05 beta
-// vote): surface-toned ink + berkeley shadow on light's teal banner; cream +
-// blood-red shadow on dark's orange ribbon. Fallbacks keep the old ribbon
-// look if the main theme is absent.
 .custom-category-group-toggle h2 {
   color: var(--bm-banner-ink, var(--bm-ribbon-text, #d4be9f));
   text-shadow: var(
@@ -110,7 +93,6 @@
   justify-content: center;
   margin: 10px 0 10px;
 
-  // Chevron matches the banner lettering.
   .d-icon {
     color: var(--bm-banner-ink, var(--bm-ribbon-text, #d4be9f));
   }
@@ -145,12 +127,9 @@
   }
 }
 
-// -----------------------------------------------------------------------------
-// 2. Forum rows list — overrides the default .custom-category-group grid
-//    (set to 2 or 3 columns in the groups component) to a single column,
-//    since each row is full-width.
-// -----------------------------------------------------------------------------
-
+// ---------------------------------------------------------------------
+// 2. Forum rows list
+// ---------------------------------------------------------------------
 .forum-rows-list {
   display: grid;
   gap: 10px;
@@ -158,12 +137,9 @@
   margin: 0;
 }
 
-// -----------------------------------------------------------------------------
-// 3. Individual forum row — the outer card.
-//    border-left-color comes from the inline style set by the borderColor helper
-//    (i.e. the category's own color).
-// -----------------------------------------------------------------------------
-
+// ---------------------------------------------------------------------
+// 3. Individual forum row
+// ---------------------------------------------------------------------
 .forum__row {
   box-sizing: border-box;
   border-radius: 10px;
@@ -181,19 +157,16 @@
   }
 }
 
-// -----------------------------------------------------------------------------
-// 4. Inner content area (equivalent to JCink's <grid> element).
-// -----------------------------------------------------------------------------
-
+// ---------------------------------------------------------------------
+// 4. Inner content area (equivalent to JCink's <grid> element)
+// ---------------------------------------------------------------------
 .forum__row-inner {
   padding: 15px;
 }
 
-// -----------------------------------------------------------------------------
-// 5. Header row: stats (left) + activity indicator (right).
-//    Mirrors JCink's <new-post> flex container.
-// -----------------------------------------------------------------------------
-
+// ---------------------------------------------------------------------
+// 5. Header row: stats (left) + activity indicator (right)
+// ---------------------------------------------------------------------
 .forum__row-header {
   display: flex;
   justify-content: space-between;
@@ -221,7 +194,6 @@
   border-radius: 30px;
 }
 
-// Sits on the palette surface: normal ink, outline only on dark palettes.
 .no-new-post-macro {
   color: var(--primary);
   text-shadow: var(
@@ -235,8 +207,6 @@
   border: 2px dotted
     var(--color-tertiary-shadow, var(--bm-accent-shadow, var(--primary-low-mid)));
 
-  // SVGs ignore text-shadow — the icon needs a matching drop-shadow filter,
-  // which likewise only applies on dark palettes.
   .d-icon {
     filter: var(
       --bm-icon-outline,
@@ -246,9 +216,6 @@
   }
 }
 
-// Quaternary accent family: bg flips per mode, so border/shadow use the
-// scheme-aware quaternary pairing (--bm-accent2-shadow). Lettering stays
-// brand-furniture (cream + dark outline) — quaternary is dark in both modes.
 .new-post-macro {
   color: var(--bm-ribbon-text, #d4be9f);
   text-shadow:
@@ -267,10 +234,9 @@
   }
 }
 
-// -----------------------------------------------------------------------------
-// 6. Category title (mirrors JCink's <name>).
-// -----------------------------------------------------------------------------
-
+// ---------------------------------------------------------------------
+// 6. Category title (mirrors JCink's <name>)
+// ---------------------------------------------------------------------
 .forum__row-name {
   margin-bottom: 6px;
 
@@ -286,10 +252,9 @@
   }
 }
 
-// -----------------------------------------------------------------------------
-// 7. Description (mirrors JCink's <desc>).
-// -----------------------------------------------------------------------------
-
+// ---------------------------------------------------------------------
+// 7. Description (mirrors JCink's <desc>)
+// ---------------------------------------------------------------------
 .forum__row-desc {
   margin: 6px 0 8px;
   font-size: var(--font-0);
@@ -300,11 +265,9 @@
   }
 }
 
-// -----------------------------------------------------------------------------
-// 8. Last post info (mirrors JCink's <lastpost> and <lastposter>).
-//    Right-aligned, sitting below the description.
-// -----------------------------------------------------------------------------
-
+// ---------------------------------------------------------------------
+// 8. Last post info (mirrors JCink's <lastpost> and <lastposter>)
+// ---------------------------------------------------------------------
 .forum__row-lastpost {
   display: block;
   text-align: right;
@@ -349,11 +312,9 @@
   font-size: var(--font-down-1);
 }
 
-// -----------------------------------------------------------------------------
-// 9. Subcategory pills strip — sits outside .forum__row-inner so it gets a
-//    visual separator from the main content (mirrors JCink's <subforums>).
-// -----------------------------------------------------------------------------
-
+// ---------------------------------------------------------------------
+// 9. Subcategory pills strip
+// ---------------------------------------------------------------------
 .forum__row-subforums {
   display: flex;
   flex-wrap: wrap;
@@ -367,16 +328,12 @@
   }
 }
 
-// Individual pill — mirrors JCink's span.subforums a styling.
-// Brand-button family: bg/hover/shadow owned by the theme's --bm-btn-* /
-// --bm-accent-shadow vars (light: ec5d37 + 0da9b1 hover + blood-red shadow;
-// dark: tertiary + berkeley, unchanged). Cream lettering stays mode-invariant.
 .subforum-link {
   background-color: var(--bm-btn-bg, var(--tertiary));
   border: 2px solid var(--bm-accent-shadow, var(--primary-low-mid));
   border-radius: 30px;
   box-shadow: var(--bm-accent-shadow, var(--primary-low-mid)) 3px 3px 0 0;
-  color: var(--bm-ribbon-text, #d4be9f) !important;
+  color: var(--bm-btn-ink, var(--bm-ribbon-text, #d4be9f)) !important;
   cursor: pointer;
   display: inline-block;
   font-weight: 600;
@@ -386,11 +343,13 @@
   padding: 0 10px;
   text-align: center;
   text-decoration: none;
-  text-shadow:
+  text-shadow: var(
+    --bm-btn-text-outline,
     1px 1px 2px #000,
     -1px -1px 2px #000,
     1px 2px 2px #000,
-    1px -1px 2px #000;
+    1px -1px 2px #000
+  );
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
@@ -405,10 +364,9 @@
   }
 }
 
-// -----------------------------------------------------------------------------
-// 10. Extra link rows (lite variant — no stats or last-post column).
-// -----------------------------------------------------------------------------
-
+// ---------------------------------------------------------------------
+// 10. Extra link rows (lite variant)
+// ---------------------------------------------------------------------
 .forum__row--extra-link {
   .forum__row-inner {
     display: flex;
@@ -440,10 +398,9 @@
   }
 }
 
-// -----------------------------------------------------------------------------
-// 11. RP Resources category group — 3-column grid override + redirect images.
-// -----------------------------------------------------------------------------
-
+// ---------------------------------------------------------------------
+// 11. RP Resources category group
+// ---------------------------------------------------------------------
 .custom-category-group-rp-resources {
   .custom-category-group {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -456,11 +413,6 @@
   }
 }
 
-// The graphic is a CSS background so it can come from the THEME's scheme-aware
-// --bm-gfx-* vars (light/dark swap included). Fallbacks are this component's
-// bundled assets, so the cards still render under a theme that defines nothing.
-// All six source images are square (500x500); aspect-ratio reproduces the
-// exact sizing the old <img> got from its intrinsic dimensions.
 .redirect-image a {
   display: block;
   width: 100%;

@@ -1,0 +1,13 @@
+// =====================================================================
+// Jcink Category Port
+// =====================================================================
+.custom-category-group-search .custom-category-group {
+  grid-template-columns: 1fr;
+}
+
+.custom-category-group {
+  li[data-category-id="15"],
+  li[data-category-id="32"] {
+    grid-column: 1 / span 2;
+  }
+}

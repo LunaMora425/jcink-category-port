@@ -14,10 +14,9 @@ import { slugify } from "discourse/lib/utilities";
 import { i18n } from "discourse-i18n";
 import ForumRowExtraLink from "./forum-row-extra-link";
 
-// ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------
 // Module-level helpers
-// ---------------------------------------------------------------------------
-
+// ---------------------------------------------------------------------
 function parseSettings(settingsStr) {
   return settingsStr.split("|").map((i) => {
     const [categoryGroup, categories] = i.split(":").map((s) => s.trim());
@@ -38,17 +37,14 @@ class ExtraLink {
   }
 }
 
-// Returns true if the category icon is an emoji
 function isEmojiCategory(category) {
   return category.style_type === "emoji";
 }
 
-// Grabs color for category icon
 function categoryIconStyle(color) {
   return htmlSafe(`color: #${color}`);
 }
 
-// Returns true when the category has topics the user hasn't read yet.
 function hasNewActivity(category) {
   const topics = category.topics ?? [];
   return topics.some(
@@ -56,17 +52,14 @@ function hasNewActivity(category) {
   );
 }
 
-// Returns the topic count for a category.
 function getTopicCount(category) {
   return category.topicCount ?? category.topic_count ?? 0;
 }
 
-// Returns the post count for a category.
 function getPostCount(category) {
   return category.postCount ?? category.post_count ?? 0;
 }
 
-// Returns the most recently active topic for a category.
 function getLastTopic(category) {
   const topics = category.topics;
   if (!topics?.length) {
@@ -77,7 +70,6 @@ function getLastTopic(category) {
   );
 }
 
-// Returns the username of the last poster on a topic.
 function getLastPosterUsername(topic) {
   if (!topic) {
     return "";
@@ -85,7 +77,6 @@ function getLastPosterUsername(topic) {
   return topic.last_poster?.username ?? "";
 }
 
-// Returns a human-readable relative date string (e.g. "3h ago", "2d ago").
 function getLastPostDate(topic) {
   if (!topic) {
     return "";
@@ -116,15 +107,13 @@ function getLastPostDate(topic) {
   return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
 }
 
-// ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------
 // Main component
-// ---------------------------------------------------------------------------
-
+// ---------------------------------------------------------------------
 export default class ForumRowsGroups extends Component {
   @service router;
   @service siteSettings;
 
-  // Only render on the main categories page when a "boxes" style is active.
   get shouldShow() {
     return (
       this.router.currentRouteName === "discovery.categories" &&
@@ -132,7 +121,6 @@ export default class ForumRowsGroups extends Component {
     );
   }
 
-  // Builds the ordered list of groups from the component settings.
   get categoryGroupList() {
     const parsedSettings = parseSettings(settings.category_groups);
     const extraLinks = JSON.parse(settings.extra_links || "[]");
@@ -173,7 +161,6 @@ export default class ForumRowsGroups extends Component {
       []
     );
 
-    // Categories not assigned to any group
     if (settings.show_ungrouped) {
       const ungrouped = this.args.categories.filter(
         (c) =>
@@ -187,7 +174,6 @@ export default class ForumRowsGroups extends Component {
       }
     }
 
-    // Muted categories (collapsed by default via localStorage)
     const mutedCategories = settings.hide_muted_subcategories
       ? this.args.categories.filter((c) => c.notification_level === 0)
       : this.args.categories.filter((c) => c.hasMuted);
@@ -202,11 +188,9 @@ export default class ForumRowsGroups extends Component {
     return groups;
   }
 
-  // Restore collapsed/expanded state from localStorage on first render.
   @action
   initializeLocalStorage() {
     if (!localStorage.getItem("categoryGroups")) {
-      // Mute group starts collapsed by default
       localStorage.setItem(
         "categoryGroups",
         JSON.stringify([
@@ -220,7 +204,6 @@ export default class ForumRowsGroups extends Component {
     });
   }
 
-  // Toggle a group's collapsed state and persist to localStorage.
   @action
   toggleGroup(name, event) {
     event.preventDefault();
@@ -354,8 +337,7 @@ export default class ForumRowsGroups extends Component {
 
                     </div>
 
-                    {{! Subcategory pills — rendered outside forum__row-inner
-                        so they sit in their own bottom strip }}
+                    {{! Subcategory pills }}
                     {{#if c.subcategories.length}}
                       <div class="forum__row-subforums">
                         {{#each c.subcategories as |sc|}}

@@ -1,10 +1,6 @@
+// RP resource card links — graphics are theme-owned (--bm-gfx-* vars).
 import { apiInitializer } from "discourse/lib/api";
 
-// The card graphics themselves are THEME-owned (each theme defines
-// --bm-gfx-* vars in its color_definitions.scss; see THEME-ARCHITECTURE.md
-// rule 5). This initializer only builds the link markup — the image arrives
-// via CSS background-image in common.scss, which falls back to this
-// component's bundled assets when a theme doesn't define the vars.
 export default apiInitializer((api) => {
   const redirectRowsData = [
     {
@@ -49,14 +45,9 @@ export default apiInitializer((api) => {
         );
 
         if (rowData) {
-          // Already swapped on a previous page change — re-running would
-          // re-query the (now gone) original link and stomp the href.
           if (redirectRow.querySelector(".redirect-image")) {
             return;
           }
-          // The extra-link rows are rendered by forum-row-extra-link.gjs,
-          // which puts the outbound URL on .forum__row-name a
-          // (a.parent-box-link only exists in core's category-boxes markup).
           const parentLink = redirectRow.querySelector(
             ".forum__row-name a, a.parent-box-link"
           );
