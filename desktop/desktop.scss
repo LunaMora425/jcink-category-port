@@ -5,6 +5,15 @@
   grid-template-columns: 1fr;
 }
 
+.custom-category-group-roleplay .custom-category-group {
+  grid-template-columns: 1fr;
+
+  li[data-category-id="15"],
+  li[data-category-id="32"] {
+    grid-column: auto;
+  }
+}
+
 .custom-category-group {
   li[data-category-id="15"],
   li[data-category-id="32"] {
