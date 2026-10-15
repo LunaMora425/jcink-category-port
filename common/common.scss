@@ -1,10 +1,3 @@
-// =====================================================================
-// Discourse Forum Rows
-// =====================================================================
-
-// ---------------------------------------------------------------------
-// 1. Hide the default Discourse category layout when this component is active
-// ---------------------------------------------------------------------
 .navigation-categories .contents {
   .category-boxes-with-topics,
   .category-boxes {
@@ -57,9 +50,6 @@
   padding: 0 calc(var(--s) + 0.5em) var(--d);
   line-height: 1.8;
   background:
-    // fold anchors sit 1px below the clip-path's body edge (100% - --d):
-    // a stop exactly on the clip line antialiases into a visible sliver on
-    // light-fold (dim-quaternary) palettes — the half/full "underline"
     conic-gradient(
         at left var(--s) bottom calc(var(--d) - 1px),
         #0000 25%,
@@ -130,9 +120,6 @@
   }
 }
 
-// ---------------------------------------------------------------------
-// 2. Forum rows list
-// ---------------------------------------------------------------------
 .forum-rows-list {
   display: grid;
   gap: 10px;
@@ -140,9 +127,6 @@
   margin: 0;
 }
 
-// ---------------------------------------------------------------------
-// 3. Individual forum row
-// ---------------------------------------------------------------------
 .forum__row {
   box-sizing: border-box;
   border-radius: 10px;
@@ -163,16 +147,10 @@
   }
 }
 
-// ---------------------------------------------------------------------
-// 4. Inner content area (equivalent to JCink's <grid> element)
-// ---------------------------------------------------------------------
 .forum__row-inner {
   padding: 15px;
 }
 
-// ---------------------------------------------------------------------
-// 5. Header row: stats (left) + activity indicator (right)
-// ---------------------------------------------------------------------
 .forum__row-header {
   display: flex;
   justify-content: space-between;
@@ -190,7 +168,6 @@
   }
 }
 
-// New Activity Indicators
 .no-new-post-macro,
 .new-post-macro {
   display: inline-block;
@@ -244,9 +221,6 @@
   }
 }
 
-// ---------------------------------------------------------------------
-// 6. Category title (mirrors JCink's <name>)
-// ---------------------------------------------------------------------
 .forum__row-name {
   margin-bottom: 6px;
 
@@ -262,9 +236,6 @@
   }
 }
 
-// ---------------------------------------------------------------------
-// 7. Description (mirrors JCink's <desc>)
-// ---------------------------------------------------------------------
 .forum__row-desc {
   margin: 6px 0 8px;
   font-size: var(--font-0);
@@ -275,9 +246,6 @@
   }
 }
 
-// ---------------------------------------------------------------------
-// 8. Last post info (mirrors JCink's <lastpost> and <lastposter>)
-// ---------------------------------------------------------------------
 .forum__row-lastpost {
   display: block;
   text-align: right;
@@ -322,9 +290,6 @@
   font-size: var(--font-down-1);
 }
 
-// ---------------------------------------------------------------------
-// 9. Subcategory pills strip
-// ---------------------------------------------------------------------
 .forum__row-subforums {
   display: flex;
   flex-wrap: wrap;
@@ -374,9 +339,6 @@
   }
 }
 
-// ---------------------------------------------------------------------
-// 10. Extra link rows (lite variant)
-// ---------------------------------------------------------------------
 .forum__row--extra-link {
   .forum__row-inner {
     display: flex;
@@ -408,9 +370,6 @@
   }
 }
 
-// ---------------------------------------------------------------------
-// 11. RP Resources category group
-// ---------------------------------------------------------------------
 .custom-category-group-rp-resources {
   .custom-category-group {
     grid-template-columns: repeat(3, minmax(0, 1fr));

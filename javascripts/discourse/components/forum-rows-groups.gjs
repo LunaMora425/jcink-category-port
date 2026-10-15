@@ -14,9 +14,6 @@ import { slugify } from "discourse/lib/utilities";
 import { i18n } from "discourse-i18n";
 import ForumRowExtraLink from "./forum-row-extra-link";
 
-// ---------------------------------------------------------------------
-// Module-level helpers
-// ---------------------------------------------------------------------
 function parseSettings(settingsStr) {
   return settingsStr.split("|").map((i) => {
     const [categoryGroup, categories] = i.split(":").map((s) => s.trim());
@@ -107,9 +104,6 @@ function getLastPostDate(topic) {
   return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
 }
 
-// ---------------------------------------------------------------------
-// Main component
-// ---------------------------------------------------------------------
 export default class ForumRowsGroups extends Component {
   @service router;
   @service siteSettings;
@@ -250,11 +244,9 @@ export default class ForumRowsGroups extends Component {
             <ul class="custom-category-group forum-rows-list">
               {{#each group.items as |c|}}
 
-                {{! ── Extra link (not a real category) ── }}
                 {{#if c.isExtraLink}}
                   <ForumRowExtraLink @link={{c}} />
 
-                  {{! ── Real Discourse category ── }}
                 {{else}}
                   <li
                     id="fr-{{c.id}}"
@@ -266,7 +258,6 @@ export default class ForumRowsGroups extends Component {
                   >
                     <div class="forum__row-inner">
 
-                      {{! Header row: stats left, new-activity indicator right }}
                       <div class="forum__row-header">
                         <div class="forum__row-stats">
                           <span class="stat-count">{{getTopicCount c}}</span>
@@ -295,7 +286,6 @@ export default class ForumRowsGroups extends Component {
                         </div>
                       </div>
 
-                      {{! Category title }}
                       <div class="forum__row-name">
                         <a href={{c.url}}>
                           {{#if (isEmojiCategory c)}}
@@ -309,14 +299,12 @@ export default class ForumRowsGroups extends Component {
                         </a>
                       </div>
 
-                      {{! Description }}
                       {{#if c.description_excerpt}}
                         <div class="forum__row-desc">
                           {{htmlSafe c.description_excerpt}}
                         </div>
                       {{/if}}
 
-                      {{! Last post info }}
                       {{#let (getLastTopic c) as |topic|}}
                         {{#if topic}}
                           <a href={{topic.url}} class="forum__row-lastpost">
@@ -337,7 +325,6 @@ export default class ForumRowsGroups extends Component {
 
                     </div>
 
-                    {{! Subcategory pills }}
                     {{#if c.subcategories.length}}
                       <div class="forum__row-subforums">
                         {{#each c.subcategories as |sc|}}
@@ -348,7 +335,6 @@ export default class ForumRowsGroups extends Component {
                       </div>
                     {{/if}}
 
-                    {{! Plugin outlet for other components to hook into }}
                     <PluginOutlet
                       @name="forum-row-below-category"
                       @outletArgs={{lazyHash category=c}}

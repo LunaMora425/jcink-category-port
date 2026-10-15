@@ -1,4 +1,3 @@
-// "Lite" row for extra links — no stats or last-post column.
 import Component from "@glimmer/component";
 import CookText from "discourse/components/cook-text";
 import borderColor from "discourse/helpers/border-color";

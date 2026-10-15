@@ -1,11 +1,7 @@
-# Category group configuration.
-# Format: "Group Name: category-slug, extra-link-id, category-slug-2 | Group 2: slug, slug"
 category_groups:
   type: "list"
   default: "Default: staff, site-feedback"
 
-# Extra links — mixed into category groups by ID.
-# Same JSON schema as discourse-category-groups-component.
 extra_links:
   default: >
     []
@@ -53,19 +49,15 @@ extra_links:
       }
     }
 
-# Show the component on mobile as well as desktop.
 show_on_mobile:
   default: true
 
-# Display categories that aren't assigned to any group in an "Other" group at the bottom.
 show_ungrouped:
   default: true
 
-# Hide subcategories whose notification level is muted from parent category rows.
 hide_muted_subcategories:
   default: false
 
-# Add New Post Activity Indicator Icons
 activity_indicator_icons:
   default: "burst|splotch"
   type: "list"

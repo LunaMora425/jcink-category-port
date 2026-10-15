@@ -1,4 +1,3 @@
-// RP resource card links — graphics are theme-owned (--bm-gfx-* vars).
 import { apiInitializer } from "discourse/lib/api";
 
 export default apiInitializer((api) => {
